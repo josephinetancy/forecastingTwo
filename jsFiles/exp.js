@@ -50,30 +50,6 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>Typically, the wedge that lands on the arrow will activate.</p>
-                <p>This is called a "standard outcome."</p>
-                <p>Below is an example of a standard outcome.</p>
-                <img src="./img/standard-outcome.png" style="width:70%; height:70%">
-            </div>`,
-
-            `<div class='parent'>
-                <p>Occasionally, a random wedge will activate instead.</p>
-                <p>This is called a "random outcome."</p>
-                <p>Here's an example of a random outcome:</p>
-                <img src="./img/random-outcome.png" style="width:70%; height:70%">
-            </div>`,
-
-            `<div class='parent'>
-                <p>The chance of a standard outcome changes from wheel to wheel.</p>
-            </div>`,
-
-            `<div class='parent'>
-                <p>The chance of a standard outcome is displayed before each wheel.</p>
-                <p>For example, this message means that the next wheel has a 75% chance of a standard outcome and a 25% chance of a random outcome.</p>
-                <img src="./img/outcome-75.png" style="width:70%; height:70%">      
-            </div>`,
-
-            `<div class='parent'>
                 <p>After each spin, the arrow at the center of the wheel will change directions.</p>
             </div>`,
 
@@ -121,30 +97,6 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>Typically, the wedge that lands on the arrow will activate.</p>
-                <p>This is called a "standard outcome."</p>
-                <p>Below is an example of a standard outcome.</p>
-                <img src="./img/standard-outcome.png" style="width:70%; height:70%">
-            </div>`,
-
-            `<div class='parent'>
-                <p>Occasionally, a random wedge will activate instead.</p>
-                <p>This is called a "random outcome."</p>
-                <p>Here's an example of a random outcome:</p>
-                <img src="./img/random-outcome.png" style="width:70%; height:70%">
-            </div>`,
-
-            `<div class='parent'>
-                <p>The chance of a standard outcome changes from wheel to wheel.</p>
-            </div>`,
-
-            `<div class='parent'>
-                <p>The chance of a standard outcome is displayed before each wheel.</p>
-                <p>For example, this message means that the next wheel has a 75% chance of a standard outcome and a 25% chance of a random outcome.</p>
-                <img src="./img/outcome-75.png" style="width:70%; height:70%">      
-            </div>`,
-
-            `<div class='parent'>
                 <p>After each spin, the arrow at the center of the wheel will change directions.</p>
             </div>`,
 
@@ -177,7 +129,7 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>To get a feel for the game, you'll practice spinning two example wheels.</p>
+                <p>To get a feel for the game, you'll practice spinning one example wheel.</p>
                 <p>Continue to the next screen to begin.</p>
             </div>`,      
         ],
@@ -208,7 +160,7 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>To get a feel for the game, you'll practice spinning two example wheels.</p>
+                <p>To get a feel for the game, you'll practice spinning one example wheel.</p>
                 <p>Continue to the next screen to begin.</p>
             </div>`,     
         ],
@@ -574,7 +526,7 @@ function mapToWedges(numbers) {
 function mapToWedges(numbers) {
     const numberNames = [
         'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'
-    ];
+    ];1
     return numbers.map(num => wedges[numberNames[num - 1]]);
 }
 */
@@ -653,17 +605,47 @@ const previewWheel1Data = {
   arrangement: '1'.repeat(20)
 };
 
-const previewWheel2Data = {
-  sectors: previewSectors,
-  ev: calculateEV(previewNumbers),
-  sd: calculateSD(previewNumbers),
-  uniformity: calculateUniformity(previewNumbers),
-  cardinality: calculateCardinality(previewNumbers),
-  reliability: 0.2,
-  label: '20%',
+
+const wheel1 = [1, 1, 1, 1, 1, 9];
+const wheel2 = [1, 9, 1, 9, 1, 9];
+const wheel3 = [9, 9, 9, 9, 9, 1];
+
+const wheel1Sectors = mapToWedges(wheel1);
+const wheel2Sectors = mapToWedges(wheel2);
+const wheel3Sectors = mapToWedges(wheel3);
+
+const Wheel1Data = {
+  sectors: wheel1Sectors,
+  ev: calculateEV(wheel1),
+  sd: calculateSD(wheel1),
+  uniformity: calculateUniformity(wheel1),
+  cardinality: calculateCardinality(wheel1),
+  reliability: 1,
+  label: '100%',
   arrangement: '1'.repeat(20)
 };
 
+const Wheel2Data = {
+  sectors: wheel2Sectors,
+  ev: calculateEV(wheel2),
+  sd: calculateSD(wheel2),
+  uniformity: calculateUniformity(wheel2),
+  cardinality: calculateCardinality(wheel2),
+  reliability: 1,
+  label: '100%',
+  arrangement: '1'.repeat(20)
+};
+
+const Wheel3Data = {
+  sectors: wheel3Sectors,
+  ev: calculateEV(wheel3),
+  sd: calculateSD(wheel3),
+  uniformity: calculateUniformity(wheel3),
+  cardinality: calculateCardinality(wheel3),
+  reliability: 1,
+  label: '100%',
+  arrangement: '1'.repeat(20)
+};
 
 const spinnerTrialData = createSpinnerTrialData();
 
@@ -927,13 +909,24 @@ const previewBlock1 = {
   timeline_variables: [previewWheel1Data]
 };
 
-const previewBlock2 = {
-  timeline: [resetScoreTracker, preSpinPractice, spin],
-  timeline_variables: [previewWheel2Data]
+const wheel1Play = {
+  timeline: [resetScoreTracker, preSpin, spin, flowMeasure],
+  timeline_variables: [Wheel1Data]
+};
+
+const wheel2Play = {
+  timeline: [preSpin, spin, flowMeasure],
+  timeline_variables: [Wheel2Data]
+};
+
+
+const wheel3Play = {
+  timeline: [preSpin, spin, flowMeasure],
+  timeline_variables: [Wheel3Data]
 };
 
 // for actual task
-const nRepeats = 18;
+const nRepeats = 3;
 const spinBlocks = [];
 
 for (let i = 0; i < nRepeats; i++) {
@@ -952,18 +945,18 @@ for (let i = 0; i < nRepeats; i++) {
 }
 
 p.preview = {
-    timeline: [previewBlock1, previewBlock2],
+    timeline: [previewBlock1],
     randomize_order: false, 
 };
 
 p.task = {
-    timeline: [...spinBlocks],
-    randomize_order: false, 
+    timeline: [wheel1Play, wheel2Play, wheel3Play],
+    randomize_order: true, 
 };
 
 
 
-const nRepeatsStatic = 18;
+const nRepeatsStatic = 3;
 const staticSpinBlocks = [];
 
 for (let i = 0; i < nRepeatsStatic; i++) {
