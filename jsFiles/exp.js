@@ -137,7 +137,7 @@ var textNew = {
         goalPredict: [
             `<div class='parentGoal'>
                 <p>Your goal in Feel the Spin is to guess how an average person would feel while spinning different wheels. </p>
-                <p>You will see a variety of wheels, each with its own set of values and probability of a standard outcome. </p>
+                <p>You will see a variety of wheels, each with its own set of values. </p>
                 <p>For each wheel, your job is to guess how <b>immersed and absorbed</b> an average person would feel while spinning it&mdash;simply provide your best guess about the typical experience.</p>
                 <p>Continue to the next screen to begin.</p>
             </div>`,      
@@ -146,7 +146,7 @@ var textNew = {
         goalPlay: [
             `<div class='parentGoal'>
             <p>Your goal in Feel the Spin is to spin the wheels and earn as many points as possible.</p>
-            <p>You will see a variety of wheels, each with its own set of values and probability of a standard outcome. For each wheel, your job is to spin the wheel and earn as many points as possible.</p>
+            <p>You will see a variety of wheels, each with its own set of values. For each wheel, your job is to spin the wheel and earn as many points as possible.</p>
             <p>Also, throughout Feel the Spin, you will describe your feelings. Specifically, you will report how <b>immersed and absorbed</b> you felt while spinning each wheel.</p>
             <p>Continue to the next screen to begin.</p>
             </div>`,      
@@ -238,7 +238,7 @@ var textNew = {
     };
 
 
-let correctAnswers = [`100%`, `80%`, `40%`, `20%`];
+let correctAnswers = [`9`];
 
     const errorMessage = {
         type: jsPsychInstructions,
@@ -254,24 +254,9 @@ let correctAnswers = [`100%`, `80%`, `40%`, `20%`];
             </div>`,
         questions: [
             {
-                prompt: `If ${textNew.attnchk1} land${textNew.s} on a 9 and there's a 100% chance of a standard outcome, what are ${textNew.their} chances of earning 9 points?`, 
+                prompt: `If ${textNew.attnchk1} land${textNew.s} on a 9, how many points are earned? `, 
                 name: `attnChk1`, 
-                options: ['100%', '80%', '40%', '20%'],
-            },
-            {
-                prompt: `If ${textNew.attnchk1} land${textNew.s} on a 9 and there's a 80% chance of a standard outcome, what are ${textNew.their} chances of earning 9 points?`, 
-                name: `attnChk2`, 
-                options: ['100%', '80%', '40%', '20%'],
-            },
-            {
-                prompt: `If ${textNew.attnchk1} land${textNew.s} on a 9 and there's a 40% chance of a standard outcome, what are ${textNew.their} chances of earning 9 points?`, 
-                name: `attnCh3`, 
-                options: ['100%', '80%', '40%', '20%'],
-            },
-            {
-                prompt: `If ${textNew.attnchk1} land${textNew.s} on a 9 and there's a 20% chance of a standard outcome, what are ${textNew.their} chances of earning 9 points?`, 
-                name: `attnCh4`, 
-                options: ['100%', '80%', '40%', '20%'],
+                options: ['5', '7', '9', '10'],
             },
         ],
         scale_width: 500,
@@ -775,7 +760,6 @@ preamble: function() {
 <div style="text-align:center;">
   <canvas id="staticWheelCanvas" width="475" height="475" style="border:1px solid #ccc; margin-bottom: 10px;"></canvas>
   <div style="margin-top: 10px;">
-    <strong>${pct} chance of standard outcome</strong>
   </div>
 </div>
   `;
@@ -905,23 +889,23 @@ preamble: function() {
 
 //for preview
 const previewBlock1 = {
-  timeline: [preSpinPractice, spin],
+  timeline: [spin],
   timeline_variables: [previewWheel1Data]
 };
 
 const wheel1Play = {
-  timeline: [resetScoreTracker, preSpin, spin, flowMeasure],
+  timeline: [resetScoreTracker, spin, flowMeasure],
   timeline_variables: [Wheel1Data]
 };
 
 const wheel2Play = {
-  timeline: [preSpin, spin, flowMeasure],
+  timeline: [spin, flowMeasure],
   timeline_variables: [Wheel2Data]
 };
 
 
 const wheel3Play = {
-  timeline: [preSpin, spin, flowMeasure],
+  timeline: [spin, flowMeasure],
   timeline_variables: [Wheel3Data]
 };
 
@@ -967,11 +951,29 @@ for (let i = 0; i < nRepeatsStatic; i++) {
 }
 
 
-p.taskPredict = {
-    timeline: [...staticSpinBlocks],
-    randomize_order: false, 
+const wheel1Predict = {
+    timeline: [staticSpin],
+    timeline_variables: [Wheel1Data],
+    randomize_order: true, 
 };
 
+const wheel2Predict = {
+    timeline: [staticSpin],
+    timeline_variables: [Wheel2Data],
+    randomize_order: true, 
+};
+
+const wheel3Predict = {
+    timeline: [staticSpin],
+    timeline_variables: [Wheel3Data], 
+    randomize_order: true, 
+};
+
+
+p.taskPredict = {
+    timeline: [wheel1Predict, wheel2Predict, wheel3Predict],
+    randomize_order: true, 
+};
    /*
     *
     *   Demographics
@@ -1109,7 +1111,7 @@ if (randomAssignment === 1) {
     p.save_data = {
         type: jsPsychPipe,
         action: "save",
-        experiment_id: "133taaH9iM67",
+        experiment_id: "XtDQMPBLbJ62",
         filename: filename,
         data_string: ()=>jsPsych.data.get().csv()
     };
