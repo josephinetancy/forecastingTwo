@@ -909,6 +909,34 @@ const wheel3Play = {
   timeline_variables: [Wheel3Data]
 };
 
+const combinedTimelines = [
+    { timeline: wheel1Play.timeline, timeline_variables: wheel1Play.timeline_variables },
+    { timeline: wheel2Play.timeline, timeline_variables: wheel2Play.timeline_variables },
+    { timeline: wheel3Play.timeline, timeline_variables: wheel3Play.timeline_variables }
+];
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+const shuffledTimelines = shuffleArray(combinedTimelines);
+
+p.task = {
+    timeline: shuffledTimelines.map(timelineObj => {
+        return {
+            timeline: timelineObj.timeline,
+            timeline_variables: timelineObj.timeline_variables
+        };
+    }),
+    randomize_order: false // No need to randomize order again, it's already done
+};
+
+/*
+
 // for actual task
 const nRepeats = 3;
 const spinBlocks = [];
@@ -926,18 +954,12 @@ for (let i = 0; i < nRepeats; i++) {
     timeline: blockTimeline,
     timeline_variables: [createSpinnerTrialData()]
   });
-}
+} */
 
 p.preview = {
     timeline: [previewBlock1],
     randomize_order: false, 
 };
-
-p.task = {
-    timeline: [wheel1Play, wheel2Play, wheel3Play],
-    randomize_order: true, 
-};
-
 
 
 const nRepeatsStatic = 3;
@@ -954,26 +976,38 @@ for (let i = 0; i < nRepeatsStatic; i++) {
 const wheel1Predict = {
     timeline: [staticSpin],
     timeline_variables: [Wheel1Data],
-    randomize_order: true, 
 };
 
 const wheel2Predict = {
     timeline: [staticSpin],
     timeline_variables: [Wheel2Data],
-    randomize_order: true, 
 };
 
 const wheel3Predict = {
     timeline: [staticSpin],
     timeline_variables: [Wheel3Data], 
-    randomize_order: true, 
 };
 
+
+const combinedTimelines1 = [
+    { timeline: wheel1Predict.timeline, timeline_variables: wheel1Predict.timeline_variables },
+    { timeline: wheel2Predict.timeline, timeline_variables: wheel2Predict.timeline_variables },
+    { timeline: wheel3Predict.timeline, timeline_variables: wheel3Predict.timeline_variables }
+];
+
+// Shuffle the combined timelines
+const shuffledTimelines1 = shuffleArray(combinedTimelines1);
 
 p.taskPredict = {
-    timeline: [wheel1Predict, wheel2Predict, wheel3Predict],
-    randomize_order: true, 
+    timeline: shuffledTimelines1.map(timelineObj => {
+        return {
+            timeline: timelineObj.timeline,
+            timeline_variables: timelineObj.timeline_variables
+        };
+    }),
+    randomize_order: false // No need to randomize order again, it's already done
 };
+
    /*
     *
     *   Demographics
