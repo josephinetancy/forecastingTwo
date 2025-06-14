@@ -38,7 +38,7 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>When a wheel stops spinning, one of the wedges will activate.</p>
+                <p>When the wheel stops spinning, the wedge you land on will activate.</p>
                 <p>The activated wedge will turn black, like this:</p>
                 <img src="./img/standard-outcome.png" style="width:70%; height:70%">
             </div>`,
@@ -85,7 +85,7 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>When a wheel stops spinning, one of the wedges will activate.</p>
+                <p>When the wheel stops spinning, the wedge you land on will activate.</p>
                 <p>The activated wedge will turn black, like this:</p>
                 <img src="./img/standard-outcome.png" style="width:70%; height:70%">
             </div>`,
@@ -527,9 +527,22 @@ function calculateSD(numbers) {
 }
 
 function calculateUniformity(numbers) {
-    const unique = new Set(numbers);
-    return unique.size / numbers.length;
+    const elementCounts = {};
+    numbers.forEach(num => {
+        elementCounts[num] = (elementCounts[num] || 0) + 1;
+    });
+
+    const frequencies = Object.values(elementCounts);
+
+    const totalElements = numbers.length;
+    const uniformityScore = frequencies.reduce((sum, count) => {
+        const proportion = count / totalElements;
+        return sum + Math.abs(proportion - (1 / frequencies.length));
+    }, 0);
+
+    return uniformityScore / frequencies.length;
 }
+
 
 function calculateCardinality(numbers) {
     const unique = new Set(numbers);
@@ -895,18 +908,27 @@ const previewBlock1 = {
 
 const wheel1Play = {
   timeline: [resetScoreTracker, spin, flowMeasure],
-  timeline_variables: [Wheel1Data]
+  timeline_variables: [Wheel1Data],
+  on_finish: (data) => {
+  scoreTracker += data.score; // Assuming 'data.score' holds the score
+
 };
 
 const wheel2Play = {
   timeline: [spin, flowMeasure],
-  timeline_variables: [Wheel2Data]
+  timeline_variables: [Wheel2Data],
+  on_finish: (data) => {
+  scoreTracker += data.score; // Assuming 'data.score' holds the score
+
 };
 
 
 const wheel3Play = {
   timeline: [spin, flowMeasure],
-  timeline_variables: [Wheel3Data]
+  timeline_variables: [Wheel3Data],
+  on_finish: (data) => {
+  scoreTracker += data.score; // Assuming 'data.score' holds the score
+
 };
 
 const combinedTimelines = [
