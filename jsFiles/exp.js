@@ -85,7 +85,7 @@ var textNew = {
             </div>`,
 
             `<div class='parent'>
-                <p>When the wheel stops spinning, the wedge you land on will activate.</p>
+                <p>When the wheel stops spinning, the wedge the player lands on will activate.</p>
                 <p>The activated wedge will turn black, like this:</p>
                 <img src="./img/standard-outcome.png" style="width:70%; height:70%">
             </div>`,
