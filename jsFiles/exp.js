@@ -902,7 +902,7 @@ preamble: function() {
 
 //for preview
 const previewBlock1 = {
-  timeline: [spin],
+  timeline: [resetScoreTracker, spin],
   timeline_variables: [previewWheel1Data]
 };
 
@@ -915,7 +915,7 @@ const wheel1Play = {
 };
 
 const wheel2Play = {
-  timeline: [resetScoreTracker, spin, flowMeasure],
+  timeline: [spin, flowMeasure],
   timeline_variables: [Wheel2Data],
   on_finish: (data) => {
     scoreTracker += data.score; // Assuming 'data.score' holds the score
@@ -924,7 +924,7 @@ const wheel2Play = {
 
 
 const wheel3Play = {
-  timeline: [resetScoreTracker, spin, flowMeasure],
+  timeline: [spin, flowMeasure],
   timeline_variables: [Wheel3Data],
   on_finish: (data) => {
     scoreTracker += data.score; // Assuming 'data.score' holds the score
