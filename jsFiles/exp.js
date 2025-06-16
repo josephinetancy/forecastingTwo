@@ -910,25 +910,25 @@ const wheel1Play = {
   timeline: [resetScoreTracker, spin, flowMeasure],
   timeline_variables: [Wheel1Data],
   on_finish: (data) => {
-  scoreTracker += data.score; // Assuming 'data.score' holds the score
-
+    scoreTracker += data.score; // Assuming 'data.score' holds the score
+  }
 };
 
 const wheel2Play = {
-  timeline: [spin, flowMeasure],
+  timeline: [resetScoreTracker, spin, flowMeasure],
   timeline_variables: [Wheel2Data],
   on_finish: (data) => {
-  scoreTracker += data.score; // Assuming 'data.score' holds the score
-
+    scoreTracker += data.score; // Assuming 'data.score' holds the score
+  }
 };
 
 
 const wheel3Play = {
-  timeline: [spin, flowMeasure],
+  timeline: [resetScoreTracker, spin, flowMeasure],
   timeline_variables: [Wheel3Data],
   on_finish: (data) => {
-  scoreTracker += data.score; // Assuming 'data.score' holds the score
-
+    scoreTracker += data.score; // Assuming 'data.score' holds the score
+  }
 };
 
 const combinedTimelines = [
