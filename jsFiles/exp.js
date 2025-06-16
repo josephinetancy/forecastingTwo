@@ -526,21 +526,18 @@ function calculateSD(numbers) {
     return Math.sqrt(variance);
 }
 
-function calculateUniformity(numbers) {
-    const elementCounts = {};
-    numbers.forEach(num => {
-        elementCounts[num] = (elementCounts[num] || 0) + 1;
-    });
-
-    const frequencies = Object.values(elementCounts);
-
-    const totalElements = numbers.length;
-    const uniformityScore = frequencies.reduce((sum, count) => {
-        const proportion = count / totalElements;
-        return sum + Math.abs(proportion - (1 / frequencies.length));
-    }, 0);
-
-    return uniformityScore / frequencies.length;
+function calculateUniformity(array) { 
+    const counts = {}; 
+    array.forEach(value => { 
+        counts[value] = (counts[value] || 0) + 1; 
+    }); 
+    const totalElements = array.length; 
+    const uniqueElements = Object.keys(counts).length; 
+    const uniformityScore = Object.values(counts).reduce((sum, count) => { 
+        const proportion = count / totalElements; 
+        return sum + Math.abs(proportion - (1 / uniqueElements)); 
+    }, 0); 
+    return uniformityScore / uniqueElements; 
 }
 
 
