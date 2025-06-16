@@ -526,18 +526,11 @@ function calculateSD(numbers) {
     return Math.sqrt(variance);
 }
 
-function calculateUniformity(array) { 
-    const counts = {}; 
-    array.forEach(value => { 
-        counts[value] = (counts[value] || 0) + 1; 
-    }); 
-    const totalElements = array.length; 
-    const uniqueElements = Object.keys(counts).length; 
-    const uniformityScore = Object.values(counts).reduce((sum, count) => { 
-        const proportion = count / totalElements; 
-        return sum + Math.abs(proportion - (1 / uniqueElements)); 
-    }, 0); 
-    return uniformityScore / uniqueElements; 
+function calculateUniformity(arr) {
+  const counts = {};
+  arr.forEach(val => counts[val] = (counts[val] || 0) + 1);
+  const maxCount = Math.max(...Object.values(counts));
+  return 1 - (maxCount / arr.length);
 }
 
 
