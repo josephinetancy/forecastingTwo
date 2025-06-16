@@ -907,7 +907,7 @@ const previewBlock1 = {
 };
 
 const wheel1Play = {
-  timeline: [resetScoreTracker, spin, flowMeasure],
+  timeline: [spin, flowMeasure],
   timeline_variables: [Wheel1Data],
   on_finish: (data) => {
     scoreTracker += data.score; // Assuming 'data.score' holds the score
@@ -979,8 +979,14 @@ for (let i = 0; i < nRepeats; i++) {
 } */
 
 p.preview = {
-    timeline: [previewBlock1],
-    randomize_order: false, 
+  timeline: [
+    previewBlock1,
+    {
+      type: jsPsychCallFunction,
+      func: () => { scoreTracker = 0; }
+    }
+  ],
+  randomize_order: false
 };
 
 
